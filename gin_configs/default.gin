@@ -1,0 +1,32 @@
+Trainner.train_dataset = './datasets/cloth2d_train.tfrecords'
+Trainner.eval_dataset = './datasets/cloth2d_test.tfrecords'
+Trainner.model = @make_RL_model()
+Trainner.pred_target = 'node'
+Trainner.use_RL = True
+Trainner.loss = 'RL_node_simloss'
+Trainner.num_epoch = 100
+Trainner.batch_size = 64
+Trainner.summary_dir = './tmp/tboard/'
+
+Model.vgg16_npy_path = 'vgg16_weights.npz'
+Model.fc_sizes = [1024, 1024, 128, 128]
+Model.num_points = 4
+Model.loss_type = 'l2'
+Model.learning_rate = 0.001
+Model.save_dir = './tmp'
+
+Model_STN.vgg16_npy_path = 'vgg16_weights.npz'
+Model_STN.fc_sizes = [1024, 256]
+Model_STN.loss_type = 'l2'
+Model_STN.learning_rate = 0.001
+Model_STN.train_scale = True
+Model_STN.train_rotation = True
+Model_STN.save_dir = './tmp'
+
+make_RL_model.base_model=@Model_STN
+make_RL_model.variance_type = 'independent'
+make_RL_model.variance_per_point = False
+make_RL_model.pointwise_cost = True
+make_RL_model.entropy_weight = 0.01
+make_RL_model.learning_rate = 0.0001
+make_RL_model.save_dir = './tmp'

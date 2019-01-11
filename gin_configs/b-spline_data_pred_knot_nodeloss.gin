@@ -1,0 +1,25 @@
+SAVE_DIR = './b-spline_data_pred_knot_nodeloss/'
+Trainner.train_dataset = './datasets/cloth2d_train.tfrecords'
+Trainner.eval_dataset = './datasets/cloth2d_test.tfrecords'
+Trainner.model = @Model()
+Trainner.pred_target = 'knot'
+Trainner.use_RL = False
+Trainner.loss = 'node_loss'
+Trainner.num_epoch = 30
+Trainner.batch_size = 64
+Trainner.save_dir = %SAVE_DIR
+
+Model.vgg16_npy_path = 'vgg16_weights.npz'
+Model.fc_sizes = [1024, 1024, 128, 128]
+Model.num_points = 4
+Model.loss_type = 'gradient'
+Model.learning_rate = 0.001
+Model.momentum = 0.5
+Model.save_dir = %SAVE_DIR
+
+Visualizer.eval_dataset = './datasets/cloth2d_test.tfrecords'
+Visualizer.eval_snapshot = './b-spline_data_pred_knot_nodeloss/model-29'
+Visualizer.model = @Model()
+Visualizer.pred_target = 'knot'
+Visualizer.use_physbam = False
+

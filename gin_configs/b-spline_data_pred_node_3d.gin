@@ -1,0 +1,19 @@
+SAVE_DIR = './b-spline_data_pred_node_3d/'
+Trainner.train_dataset = './cloth2d_train_3d.tfrecords'
+Trainner.eval_dataset = './cloth2d_test_3d.tfrecords'
+Trainner.model = @Model_3d()
+Trainner.use_RL = False
+Trainner.loss = 'l2'
+Trainner.num_epoch = 100
+Trainner.batch_size = 64
+Trainner.save_dir = %SAVE_DIR
+Trainner.snapshot = './b-spline_data_pred_node_3d/model-99'
+
+Model_3d.vgg16_npy_path = 'vgg16_weights.npz'
+Model_3d.fc_sizes = [1024, 1024]
+Model_3d.num_points = 128
+Model_3d.loss_type = 'l2'
+Model_3d.learning_rate = 0.0005
+Model_3d.momentum = 0.7
+Model_3d.save_dir = %SAVE_DIR
+

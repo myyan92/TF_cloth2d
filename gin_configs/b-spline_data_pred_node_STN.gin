@@ -1,0 +1,26 @@
+SAVE_DIR = './b-spline_data_pred_node_STN/'
+Trainner.train_dataset = './datasets/cloth2d_train.tfrecords'
+Trainner.eval_dataset = './datasets/cloth2d_test.tfrecords'
+Trainner.model = @Model_STN()
+Trainner.pred_target = 'node'
+Trainner.use_RL = False
+Trainner.loss = 'l2'
+Trainner.num_epoch = 30
+Trainner.batch_size = 64
+Trainner.save_dir = %SAVE_DIR
+
+Model_STN.vgg16_npy_path = 'vgg16_weights.npz'
+Model_STN.fc_sizes = [1024, 256]
+Model_STN.loss_type = 'l2'
+Model_STN.learning_rate = 0.00001
+Model_STN.momentum = 0.7
+Model_STN.train_scale = True
+Model_STN.train_rotation = True
+Model_STN.save_dir = %SAVE_DIR
+
+Visualizer.eval_dataset = './datasets/cloth2d_test.tfrecords'
+Visualizer.eval_snapshot = './b-spline_data_pred_node_STN/model-29'
+Visualizer.model = @Model_STN()
+Visualizer.pred_target = 'node'
+Visualizer.use_physbam = False
+

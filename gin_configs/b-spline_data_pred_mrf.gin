@@ -1,0 +1,14 @@
+SAVE_DIR = './mrf-tmp'
+Trainner.train_dataset = './datasets/cloth2d_train.tfrecords'
+Trainner.eval_dataset = './datasets/cloth2d_test.tfrecords'
+Trainner.model = @Model_MRF()
+Trainner.num_epoch = 30
+Trainner.batch_size = 64
+Trainner.save_dir = %SAVE_DIR
+Trainner.snapshot = './mrf-tmp/model-9'
+
+Model_MRF.learning_rate = 0.001
+Model_MRF.momentum = 0.9
+Model_MRF.save_dir = %SAVE_DIR
+
+
