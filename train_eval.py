@@ -68,6 +68,8 @@ class Trainner():
         self.train_writer = tf.summary.FileWriter(os.path.join(save_dir, 'tfboard'), self.sess.graph)
         self.sess.run(tf.global_variables_initializer())
         self.snapshot = snapshot
+        if snapshot is not None:
+            self.model.load(self.sess, snapshot)
         config_str = gin.operative_config_str()
         with open(os.path.join(save_dir, '0.gin'), 'w') as f:
             f.write(config_str)
