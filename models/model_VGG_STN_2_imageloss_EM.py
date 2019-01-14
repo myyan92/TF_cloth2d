@@ -1,10 +1,12 @@
-from TF_cloth2d.models.model_VGG_STN import Model_STN, VGG_MEAN
+from TF_cloth2d.models.model_VGG_STN_2 import Model_STNv2, VGG_MEAN
 import tensorflow as tf
 import tensorflow_probability as tfp
 import gin, gin.tf
 
 @gin.configurable
-class Model_IM_EM(Model_STN):
+class Model_IM_EM_v2(Model_STNv2):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
     def setup_optimizer(self):
         pix_x = tf.lin_space(-6.0,6.0,224)
@@ -95,20 +97,27 @@ class Model_IM_EM(Model_STN):
         #skip_diff = (self.image_pred[:,2:,:]-self.image_pred[:,:-2,:]) / 2.0
         #skip_dist = tf.norm(skip_diff, axis=2)
         #self.bending_loss = tf.reduce_mean(tf.square(dist[:,1:]+dist[:,:-1]-skip_dist))
-        centroids_l2 = tf.reduce_mean(tf.reshape(self.pred_2_scaled, [-1,8,8,2]), axis=2)
-        self.reg_loss_l2 = tf.reduce_mean(tf.square(centroids_l2, "reg_loss"))
+#        centroids_l2 = tf.reduce_mean(tf.reshape(self.pred_2_scaled, [-1,8,8,2]), axis=2)
+#        self.reg_loss_l2 = tf.reduce_mean(tf.square(centroids_l2, "reg_loss"))
+        self.reg_loss_l2 = tf.losses.get_regularization_loss()
 
         prob_grad = tf.gradients(self.image_loss, pix_prob)[0]
         self.prob_grad=prob_grad
         prob_grad = tf.clip_by_value(prob_grad, -0.01, 0.01)
-        self.reg_losses = 0.5*self.reg_loss + 0.3*self.reg_loss_l2
+        self.reg_losses = 0.5*self.reg_loss + 0.3*self.reg_loss_l2 # to be adjusted
         self.adam_optimizer = tf.train.AdamOptimizer(learning_rate=self.learning_rate, epsilon=0.01)
         gradvars = self.adam_optimizer.compute_gradients(self.reg_losses)
         vars = [v for g,v in gradvars]
         image_grads = tf.gradients(pix_prob, vars, grad_ys=prob_grad)
-        gradvars = [(gv[0]*5+ig,gv[1]) if gv[0] is not None else (ig,gv[1]) \
-                    for gv,ig in zip(gradvars, image_grads)]
-        self.optimizer = self.adam_optimizer.apply_gradients(gradvars)
+        gradvars_new = []
+        for (g,v), ig in zip(gradvars, image_grads):
+            if g is not None and ig is not None:
+                gradvars_new.append((g+ig, v))
+            elif g is not None:
+                gradvars_new.append((g,v))
+            elif ig is not None:
+                gradvars_new.append((ig,v))
+        self.optimizer = self.adam_optimizer.apply_gradients(gradvars_new)
 
         tf.summary.scalar('image_loss', self.image_loss)
         tf.summary.scalar('reg_loss', self.reg_loss)

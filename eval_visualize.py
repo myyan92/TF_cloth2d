@@ -5,6 +5,9 @@ from TF_cloth2d.models.model_VGG_STN_2 import Model_STNv2
 from dataset_io import data_parser
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
+from matplotlib.collections import PatchCollection
+import matplotlib.transforms
 from sample_spline import sample_b_spline, sample_equdistance
 from physbam_python.rollout_physbam import rollout_single
 import gin, argparse
@@ -65,6 +68,12 @@ class Visualizer():
                 total_loss += loss
                 total_count += position.shape[0] * position.shape[1]
                 if "STNv2" in self.model.__class__.__name__:
+                    # hack recompute loss after sampling.
+                    samples,_ = sample_equdistance(samples, np.zeros((64,64)), 64)
+                    samples = samples.transpose()
+                    total_loss -= loss
+                    loss = np.sum(np.square(samples-position[0,:,:]))
+                    total_loss += loss
                     pred = self.sess.run(self.model.pred_layers,
                                          feed_dict={self.model.rgb:image})
                     plt.plot(position[0,:,0], position[0,:,1])
@@ -73,7 +82,10 @@ class Visualizer():
                     plt.plot(pred[2][0,:,0]*6, pred[2][0,:,1]*6)
                     plt.plot(pred[3][0,:,0]*6, pred[3][0,:,1]*6)
                     plt.axis("equal")
-                    plt.show()
+                    #plt.show()
+                    #plt.savefig('vis_%04d.png'%(total_count//position.shape[1]))
+                    plt.close()
+                    print(loss)
                 elif "STN" in self.model.__class__.__name__:
                     transforms = self.sess.run(self.model.transforms_1,
                                                feed_dict={self.model.rgb:image})
@@ -87,13 +99,15 @@ class Visualizer():
                         angle = np.arctan2(trans[1], trans[0])
                         x, y = -trans[2], -trans[5]
                         rect=Rectangle(( (x-scale)*6, (y-scale)*6 ), scale*12, scale*12)
-                        t = transforms.Affine2D().rotate_around(x*6, y*6, angle)
+                        t = matplotlib.transforms.Affine2D().rotate_around(x*6, y*6, angle)
                         rect.set_transform(t)
                         boxes.append(rect)
                     pc = PatchCollection(boxes, facecolor='none', edgecolor='g')
                     ax.add_collection(pc)
                     plt.axis("equal")
-                    plt.show()
+                    #plt.show()
+                    plt.close()
+                    print(loss)
                 else:
                     plt.plot(position[0,:,0], position[0,:,1])
                     plt.plot(samples[:,0], samples[:,1])

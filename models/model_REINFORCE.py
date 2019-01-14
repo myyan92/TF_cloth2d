@@ -11,7 +11,8 @@ def make_RL_model(base_model,
                   variance_per_point=False,
                   pointwise_cost=False,
                   entropy_weight=0.2,
-                  learning_rate=0.001):
+                  learning_rate=0.001,
+                  momentum=0.9):
 
     class Model_RL(base_model):
         def __init__(self):
@@ -24,6 +25,7 @@ def make_RL_model(base_model,
             self.pointwise_cost = pointwise_cost
             self.entropy_weight = entropy_weight
             self.learning_rate = learning_rate # Overwrite supervised model learning rate.
+            self.momentum = momentum # Overwrite supervised model momentum.
             self.save_dir = save_dir # Overwrite model saving directory.
 
         def build(self, rgb=None):
@@ -40,6 +42,7 @@ def make_RL_model(base_model,
                 else:
                     self.variance = self.dense(self.last_feature, 'variance', dim, tf.nn.softplus) # log(exp(x)+1)
                     self.variance = tf.expand_dims(self.variance, axis=-1)
+                self.variance = tf.clip_by_value(self.variance, 0.01, 10.0)
                 self.pd_pred = tf.distributions.Normal(loc=self.pred, scale=self.variance)  # element-wise distribution, need to sum over log-prob
                 self.pred_sample = self.pd_pred.sample()
 
@@ -84,7 +87,9 @@ def make_RL_model(base_model,
                 centroids_l2 = tf.reduce_mean(tf.reshape(self.pred_2_scaled, [-1,8,8,2]), axis=2)
                 self.reg_loss = tf.nn.l2_loss(centroids_l2)
                 self.loss += 10*self.reg_loss
-            self.optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(self.loss)
+            self.optimizer = tf.train.AdamOptimizer(learning_rate=self.learning_rate,
+                                                    beta1 = self.momentum,
+                                                    epsilon = 1e-6).minimize(self.loss)
             tf.summary.scalar('rl_loss', self.rl_loss)
             tf.summary.scalar('cost', tf.reduce_mean(self.cost))
             tf.summary.scalar('entropy', self.entropy)

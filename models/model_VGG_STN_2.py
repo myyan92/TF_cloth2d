@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 import gin, gin.tf
-from losses_TF import node_l2loss
+from TF_cloth2d.losses_TF import node_l2loss
 from TF_cloth2d.models.spatial_transformer import transformer
 from TF_cloth2d.models.model_VGG import Model, VGG_MEAN
 import pdb
@@ -10,6 +10,7 @@ import pdb
 class Model_STNv2(Model):
     def __init__(self, **kwargs):
         # fc_sizes should be [1024, 256]
+        self.stop_gradient = kwargs.pop('stop_gradient', True)
         kwargs['num_points'] = 64 # The pred layer from VGG will be wasted.
         super().__init__(**kwargs)
 
@@ -42,8 +43,8 @@ class Model_STNv2(Model):
                                                                          0,-1,0,1,0,0]),
                              bias_initializer=tf.constant_initializer(0.0),
                              trainable=False, name='transforms_%d'%(hierarchy+1))
-
-                transforms = tf.stop_gradient(transforms)
+                if self.stop_gradient:
+                    transforms = tf.stop_gradient(transforms)
                 rois = transformer(pull_feature[hierarchy], transforms, (7,7))
                 self.rois.append(rois) # LOWRES
                 fc_1 = self.dense(tf.layers.flatten(rois), 'fc%d_1'%(4-hierarchy), 1024, tf.nn.tanh,
@@ -86,7 +87,6 @@ class Model_STNv2(Model):
 
                 pred_gather = tf.gather(pred_next_transformed, pred_gather_indexes, axis=1)
                 pred_next_averaged = tf.reduce_mean(pred_gather, axis=2)
-                #pred_next_averaged = tf.stop_gradient(pred_next_averaged)
                 self.pred_layers.append(pred_next_averaged)
 
             self.pred = self.pred_layers[-1][:,:-1,:]*6.0 # 6.0 is because of data generation.

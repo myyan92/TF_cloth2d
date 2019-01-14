@@ -1,10 +1,10 @@
-SAVE_DIR='./tmp'
+SAVE_DIR = './REINFORCE_baseline_knot_nodeloss'
 Trainner.train_dataset = './datasets/cloth2d_train.tfrecords'
 Trainner.eval_dataset = './datasets/cloth2d_test.tfrecords'
 Trainner.model = @make_RL_model()
 Trainner.pred_target = 'knot'
 Trainner.use_RL = True
-Trainner.loss = 'RL_knot_simloss'
+Trainner.loss = 'RL_knot_l2loss'
 Trainner.num_epoch = 60
 Trainner.batch_size = 64
 Trainner.save_dir = %SAVE_DIR
@@ -22,7 +22,8 @@ make_RL_model.variance_type = 'independent'
 make_RL_model.variance_per_point = False
 make_RL_model.pointwise_cost = False
 make_RL_model.entropy_weight = 0.05
-make_RL_model.learning_rate = 0.0001
+make_RL_model.learning_rate = 0.00003
+make_RL_model.momentum = 0.9
 make_RL_model.save_dir = %SAVE_DIR
 
 Visualizer.eval_dataset = './datasets/cloth2d_test.tfrecords'

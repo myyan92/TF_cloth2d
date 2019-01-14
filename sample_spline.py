@@ -2,6 +2,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 
+def normalize_shape(knots):
+    if knots.shape[0] != 2 and knots.shape[0] != 3:
+        knots = knots.transpose()
+    if knots.shape[0] != 2 and knots.shape[0] != 3:
+        raise ValueError("cannot handle knots shape")
+    return knots
+
 def sample_cubic_spline(knots):
     if len(knots)<4:
         return []
@@ -56,6 +63,7 @@ def linear_interpolate(p1, p2, w1, w2, alpha):
 
 def sample_equdistance(samples, weights, num_pts):
     samples = np.array(samples)
+    samples = normalize_shape(samples)
     lengths = samples[:,1:] - samples[:,:-1]
     lengths = np.linalg.norm(lengths, axis=0)
     lengths = np.cumsum(lengths)
