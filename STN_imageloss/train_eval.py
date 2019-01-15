@@ -5,12 +5,14 @@ from TF_cloth2d.dataset_io import data_parser
 from TF_cloth2d.sort_nodes import sort_nodes
 import numpy as np
 from PIL import Image
-import argparse
+import argparse, gin, os
 import pdb
 import matplotlib.pyplot as plt
 
+@gin.configurable
 class Trainner():
-    def __init__(self, train_dataset, eval_dataset, num_epoch, batch_size, snapshot):
+    def __init__(self, train_dataset, eval_dataset,
+                 model, num_epoch, batch_size, save_dir, snapshot):
 
         # create TensorFlow Dataset objects
         tr_data = tf.data.TFRecordDataset(train_dataset)
@@ -35,18 +37,22 @@ class Trainner():
         tf_config.gpu_options.allow_growth=True
         self.sess = tf.Session(config=tf_config)
         self.num_epoch = num_epoch
-        self.model = Model_IM_EM_v2('/scr-ssd/mengyuan/TF_cloth2d/models/vgg16_weights.npz',
-                                 fc_sizes=[1024, 256], learning_rate=0.001,
-                                 loss_type='imageEM', save_dir='./',
-                                 train_scale=True, train_rotation=True)
+        self.model = model
+        #self.model = Model_IM_EM_v2('/scr-ssd/mengyuan/TF_cloth2d/models/vgg16_weights.npz',
+        #                         fc_sizes=[1024, 256], learning_rate=0.001,
+        #                         loss_type='imageEM', save_dir='./',
+        #                         train_scale=True, train_rotation=True)
         self.model.build(self.next_image)
         self.model.setup_optimizer()
         self.global_step = 0
-        self.train_writer = tf.summary.FileWriter('tboard', self.sess.graph)
+        self.train_writer = tf.summary.FileWriter(os.path.join(save_dir, 'tboard'), self.sess.graph)
         self.sess.run(tf.global_variables_initializer())
         self.model.load(self.sess, snapshot)
-        self.loss_threshold=-8.5 # curriculum
+        self.loss_threshold=-8.6 # curriculum
         self.num_train_instance=0 # curriculum
+        config_str = gin.operative_config_str()
+        with open(os.path.join(save_dir, '0.gin'), 'w') as f:
+            f.write(config_str)
 
     def train_epoch(self):
         self.sess.run(self.training_init_op)
@@ -56,10 +62,6 @@ class Trainner():
         centroid_losses = []
         while True:
             try:
-                # image, = self.sess.run([self.next_image])
-                # im = Image.fromarray(image[0,:,:,:])
-                # im.show()
-##               pred, render = self.sess.run([self.model.image_pred, self.model.render], feed_dict={self.model.rgb:image})
                 image, image_loss_2 = self.sess.run([self.next_image, self.model.image_loss_e])
                 idx = image_loss_2 < self.loss_threshold
                 num_train_instance += np.sum(idx)
@@ -68,11 +70,6 @@ class Trainner():
                     summary, _, image_loss, reg_loss, centroid_loss = self.sess.run([self.model.merged_summary, self.model.optimizer,
                                                                  self.model.image_loss, self.model.reg_loss, self.model.reg_loss_l2],
                                                                  feed_dict={self.model.rgb:image})
-#                fig,ax=plt.subplots(1,2)
-#                ax[0].imshow(image[1,:,:,:]/255)
-#                ax[1].imshow(render[1,:,:,:])
-#                print(image_loss)
-#                plt.show()
                     self.train_writer.add_summary(summary, self.global_step)
                     self.global_step += 1
                     image_losses.append(image_loss)
@@ -112,10 +109,18 @@ class Trainner():
             self.model.save(self.sess, i)
 
 if __name__ == '__main__':
-    train_dataset = '/scr-ssd/mengyuan/TF_cloth2d/cloth2d_train_sim_seq.tfrecords'
-    test_dataset = '/scr-ssd/mengyuan/TF_cloth2d/cloth2d_test_sim_seq.tfrecords'
-    snapshot = '../b-spline_data_pred_node_STN_2/model-28'
+    parser = argparse.ArgumentParser()
+    parser.add_argument('action', choices=["train", "eval"], help="running train or eval.")
+    parser.add_argument('--gin_config', default='', help="path to gin config file.")
+    parser.add_argument('--gin_bindings', action='append', help='gin bindings strings.')
+    args = parser.parse_args()
 
-    trainner = Trainner(train_dataset, test_dataset, 120, 64, snapshot)
+    gin.parse_config_files_and_bindings([args.gin_config], args.gin_bindings)
+
+#    train_dataset = '/scr-ssd/mengyuan/TF_cloth2d/cloth2d_train_sim_seq.tfrecords'
+#    test_dataset = '/scr-ssd/mengyuan/TF_cloth2d/cloth2d_test_sim_seq.tfrecords'
+#    snapshot = '../b-spline_data_pred_node_STN_2/model-28'
+
+    trainner = Trainner()
     trainner.train()
 

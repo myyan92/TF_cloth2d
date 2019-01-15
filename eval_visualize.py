@@ -2,7 +2,7 @@ import tensorflow as tf
 from TF_cloth2d.models.model_VGG import Model
 from TF_cloth2d.models.model_VGG_STN import Model_STN
 from TF_cloth2d.models.model_VGG_STN_2 import Model_STNv2
-from dataset_io import data_parser
+from TF_cloth2d.dataset_io import data_parser
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle

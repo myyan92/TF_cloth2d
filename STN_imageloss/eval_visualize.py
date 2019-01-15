@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from matplotlib.collections import PatchCollection
 import matplotlib.transforms as transforms
-import pdb, argparse
+import pdb, argparse, gin
 
 def ploting(position, pred, transforms):
     fig, ax = plt.subplots(1)
@@ -30,8 +30,9 @@ def ploting(position, pred, transforms):
     plt.axis("equal")
     plt.show()
 
+@gin.configurable
 class Visualizer():
-    def __init__(self, eval_dataset, eval_snapshot):
+    def __init__(self, eval_dataset, eval_snapshot, model):
 
         # create TensorFlow Dataset objects
         val_data = tf.data.TFRecordDataset(eval_dataset)
@@ -40,7 +41,7 @@ class Visualizer():
         # create TensorFlow Iterator object
         iterator = tf.data.Iterator.from_structure(val_data.output_types,
                                                    val_data.output_shapes)
-        self.next_image, self.next_position, self.next_knots = iterator.get_next() # self.next_gradient
+        self.next_image, self.next_position, self.next_knot = iterator.get_next()
         # create two initialization ops to switch between the datasets
         self.eval_init_op = iterator.make_initializer(val_data)
 
@@ -49,11 +50,7 @@ class Visualizer():
             intra_op_parallelism_threads=16)
         tf_config.gpu_options.allow_growth=True
         self.sess = tf.Session(config=tf_config)
-        self.model = Model_IM_EM('/scr-ssd/mengyuan/TF_cloth2d/models/vgg16_weights.npz', fc_sizes=[1024, 256], learning_rate=0.0,
-                                 loss_type='imageEM', save_dir='./',
-                                 train_scale=True, train_rotation=True)
-#        self.model = Model_IM_EM_v2(vgg16_npy_path='/scr-ssd/mengyuan/TF_cloth2d/models/vgg16_weights.npz', fc_sizes=[1024, 1024, 256], learning_rate=0.0,
-#                                 loss_type='imageEM', save_dir='./', stop_gradient=False)
+        self.model = model
         self.model.build(rgb=self.next_image)
         self.model.setup_optimizer()
         self.sess.run(tf.global_variables_initializer())
@@ -85,13 +82,13 @@ class Visualizer():
         print("eval average node L2 loss: %f" % (total_loss/total_count))
 
 if __name__ == '__main__':
-#    model_path = '../b-spline_data_pred_node_STN_2/model-28'
-#    model_path = './train_real_ours_pretrain_solid/model-65'
-    model_path = './model-11'
-#    test_dataset = '/scr-ssd/mengyuan/TF_cloth2d/datasets/cloth2d_test.tfrecords'
-    test_dataset = '/scr-ssd/mengyuan/TF_cloth2d/cloth2d_train_real_ours_rect_2.tfrecords'
-#    test_dataset = '/scr-ssd/mengyuan/TF_cloth2d/cloth2d_test_sim_seq.tfrecords'
-    print("evaluating %s on dataset %s" % (model_path, test_dataset))
-    vis = Visualizer(test_dataset, model_path)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--gin_config', default='', help="path to gin config file.")
+    parser.add_argument('--gin_bindings', action='append', help='gin bindings strings.')
+    args = parser.parse_args()
+
+    gin.parse_config_files_and_bindings([args.gin_config], args.gin_bindings)
+
+    vis = Visualizer()
     vis.eval()
 
