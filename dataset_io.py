@@ -45,6 +45,13 @@ def data_parser(record):
     position = tf.transpose(position)
     knots = tf.reshape(features['knots'], tf.constant([2,4]))
     knots = tf.transpose(knots)
+    # add random rotation of 90 degrees
+    rotate = tf.random_uniform([]) > 0.5
+    image, position, knots = tf.cond(rotate,
+        true_fn=lambda: (tf.image.rot90(image),
+                         position[:,::-1]*tf.constant([1.0, -1.0]),
+                         knots[:,::-1]*tf.constant([1.0, -1.0])),
+        false_fn=lambda: (image, position, knots))
     return image, position, knots
 
 
