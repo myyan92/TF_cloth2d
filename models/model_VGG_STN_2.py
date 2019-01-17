@@ -125,7 +125,8 @@ class Model_STNv2(Model):
         return loss
 
 if __name__ == "__main__":
-    model = Model_STNv2('vgg16_weights.npz', fc_sizes=[1024, 256], loss_type='l2', save_dir='./')
+    model = Model_STNv2(vgg16_npy_path='vgg16_weights.npz', fc_sizes=[1024, 256],
+                        loss_type='l2', save_dir='./')
     input = tf.placeholder(dtype=tf.float32, shape=(None, 224,224,3))
     model.build(input)
     output = tf.placeholder(dtype=tf.float32, shape=(None, 64,2))

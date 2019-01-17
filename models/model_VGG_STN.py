@@ -1,25 +1,18 @@
 import numpy as np
 import tensorflow as tf
 import gin, gin.tf
+from TF_cloth2d.losses_TF import node_l2loss
 from TF_cloth2d.models.spatial_transformer import transformer
 from TF_cloth2d.models.model_VGG import Model, VGG_MEAN
 
 @gin.configurable
 class Model_STN(Model):
-    def __init__(self,
-                 vgg16_npy_path,
-                 fc_sizes,
-                 save_dir,
-                 loss_type='l2',
-                 learning_rate=0.001,
-                 momentum=0.9,
-                 train_scale=True,
-                 train_rotation=True):
+    def __init__(self, **kwargs):
         # fc_sizes should be [1024, 256]
-        num_points = 64 # The pred layer from VGG will be wasted.
-        super().__init__(vgg16_npy_path, fc_sizes, num_points, save_dir, loss_type, learning_rate, momentum)
-        self.train_scale = train_scale
-        self.train_rotation = train_rotation
+        self.train_scale = kwargs.pop('train_scale', True)
+        self.train_rotation = kwargs.pop('train_rotation', True)
+        kwargs['num_points'] = 64 # The pred layer from VGG will be wasted.
+        super().__init__(**kwargs)
 
     def build(self, rgb=None):
         """
@@ -72,7 +65,7 @@ class Model_STN(Model):
             self.gt_pred = GT_position
         else:
             self.gt_pred = tf.placeholder(name="gt_pred", dtype=tf.float32, shape=self.pred.shape)
-        self.pred_loss = tf.nn.l2_loss(self.gt_pred-self.pred, "loss")
+        self.pred_loss = node_l2loss(self.pred, self.gt_pred, resample_equdistance=True)
         centroids_l2 = tf.reduce_mean(tf.reshape(self.pred_2_scaled, [-1,8,8,2]), axis=2)
         self.reg_loss = tf.nn.l2_loss(centroids_l2, "reg_loss")
         self.loss = self.pred_loss + self.reg_loss * 10
@@ -83,11 +76,12 @@ class Model_STN(Model):
 
     def fit(self, sess, inputs, annos):
         _, loss = sess.run([self.optimizer, self.loss],
-                           feed_dict={self.rgb:inputs, self.gt_pred:annos})
+                           feed_dict={self.rgb:inputs,
+                                      self.gt_pred:annos})
         return loss
 
 if __name__ == "__main__":
-    model = Model_STN('vgg16_weights.npz', fc_sizes=[1024, 256],
+    model = Model_STN(vgg16_npy_path='vgg16_weights.npz', fc_sizes=[1024, 256],
                       loss_type='l2', save_dir='./tmp',
                       train_scale=True, train_rotation=True)
     input = tf.placeholder(dtype=tf.float32, shape=(None, 224,224,3))

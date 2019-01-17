@@ -114,16 +114,18 @@ class Visualizer():
                     plt.axis("equal")
                     plt.show()
                 if self.use_physbam:
-                    nodes = sort_nodes(samples[0,:,:])
-                    nodes_physbam=rollout_single(nodes, 20, [0.0,0.0], 1, physbam_args=" -disable_collisions")
-                    position_physbam=rollout_single(position[0,:,:], 20, [0.0,0.0], 1, physbam_args=" -disable_collisions")
+                    num_pts = samples.shape[0]
+                    nodes, _ = sample_equdistance(samples[:,:], np.zeros((num_pts, num_pts)), num_pts)
+                    nodes_physbam=rollout_single(nodes, 20, [0.0,0.0], 1, physbam_args=" -disable_collisions -stiffen_bending 1000")
+                    position_physbam=rollout_single(position[0,:,:], 20, [0.0,0.0], 1, physbam_args=" -disable_collisions -stiffen_bending 1000")
                     loss_phy = np.sum(np.square(nodes_physbam-position_physbam))
                     print("physbam: %f -> %f\n" %(loss, loss_phy))
                     plt.figure()
                     plt.plot(position_physbam[:,0], position_physbam[:,1])
                     plt.plot(nodes_physbam[:,0], nodes_physbam[:,1]) #, s=1, c="orange")
                     plt.axis("equal")
-                    plt.show()
+                    #plt.show()
+                    plt.close()
 
             except tf.errors.OutOfRangeError:
                 break
