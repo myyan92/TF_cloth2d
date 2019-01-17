@@ -11,4 +11,4 @@ wait
 mv train_log_1.txt ./train_simseq_pretrain_bspline_STN/train_log.txt
 mv train_log_2.txt ./train_simseq_pretrain_bspline_STNv2/train_log.txt
 
-shutdown -h +5
+# echo "Ymy_920402" | sudo shutdown -h +5
