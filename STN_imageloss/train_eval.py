@@ -48,7 +48,7 @@ class Trainner():
         self.train_writer = tf.summary.FileWriter(os.path.join(save_dir, 'tboard'), self.sess.graph)
         self.sess.run(tf.global_variables_initializer())
         self.model.load(self.sess, snapshot)
-        self.loss_threshold=-8.6 # curriculum
+        self.loss_threshold=-8.55 # curriculum
         self.num_train_instance=0 # curriculum
         config_str = gin.operative_config_str()
         with open(os.path.join(save_dir, '0.gin'), 'w') as f:

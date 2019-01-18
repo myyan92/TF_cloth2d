@@ -36,7 +36,7 @@ class Model_IM_EM(Model_STN):
         sigma = tf.maximum(self.sigma, 0.1)
 
         pix_prob = tf.exp((-tf.square(pix_to_segment_p)-tf.square(pix_to_segment_l))/(2*sigma*sigma))
-        self.reg_loss_e = tf.reduce_sum(pix_prob[:,:,:,1:]*pix_prob[:,:,:,:-1], axis=[0,1,3]) / 20000
+        self.reg_loss_e = tf.reduce_sum(pix_prob[:,:,:,1:]*pix_prob[:,:,:,:-1], axis=[0,1,3]) / 20000.0 # to match scale.
         pix_prob = tf.reduce_max(pix_prob, axis=3) # shape should be [224,224,batch]
         pix_prob = tf.transpose(pix_prob, perm=[2,0,1]) # [batch, 224,224]
         pix_prob = tf.clip_by_value(pix_prob, 0, 1)
@@ -101,7 +101,7 @@ class Model_IM_EM(Model_STN):
         prob_grad = tf.gradients(self.image_loss, pix_prob)[0]
         self.prob_grad=prob_grad
         prob_grad = tf.clip_by_value(prob_grad, -0.01, 0.01)
-        self.reg_losses = self.reg_loss + 10.0*self.reg_loss_l2
+        self.reg_losses = self.reg_loss + self.reg_loss_l2*10.0
         self.adam_optimizer = tf.train.AdamOptimizer(learning_rate=self.learning_rate, epsilon=0.01)
         gradvars = self.adam_optimizer.compute_gradients(self.reg_losses)
         vars = [v for g,v in gradvars]

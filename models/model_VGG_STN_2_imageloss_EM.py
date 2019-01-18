@@ -38,7 +38,7 @@ class Model_IM_EM_v2(Model_STNv2):
         sigma = tf.maximum(self.sigma, 0.1)
 
         pix_prob = tf.exp((-tf.square(pix_to_segment_p)-tf.square(pix_to_segment_l))/(2*sigma*sigma))
-        self.reg_loss_e = tf.reduce_sum(pix_prob[:,:,:,1:]*pix_prob[:,:,:,:-1], axis=[0,1,3]) / 20000.0
+        self.reg_loss_e = tf.reduce_sum(pix_prob[:,:,:,1:]*pix_prob[:,:,:,:-1], axis=[0,1,3]) / 20000.0 # to match scale.
         pix_prob = tf.reduce_max(pix_prob, axis=3) # shape should be [224,224,batch]
         pix_prob = tf.transpose(pix_prob, perm=[2,0,1]) # [batch, 224,224]
         pix_prob = tf.clip_by_value(pix_prob, 0, 1)

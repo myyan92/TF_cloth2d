@@ -4,7 +4,7 @@ Trainner.eval_dataset = '/home/myyan92/TF_cloth2d/datasets/cloth2d_test_sim_seq.
 Trainner.snapshot = '/home/myyan92/TF_cloth2d/b-spline_data_pred_node_STN_2/model-28'
 Trainner.model = @Model_IM_EM_v2()
 Trainner.num_epoch = 30
-Trainner.batch_size = 64
+Trainner.batch_size = 48
 Trainner.save_dir = %SAVE_DIR
 
 Model_IM_EM_v2.vgg16_npy_path = '/home/myyan92/TF_cloth2d/models/vgg16_weights.npz'
