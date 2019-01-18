@@ -77,5 +77,8 @@ def node_l2loss(pred, GT,
     else:
         samples = pred
 
-    loss = tf.nn.l2_loss(samples-GT)
+    loss_1 = tf.reduce_sum(tf.square(samples-GT), axis=[1,2])
+    loss_2 = tf.reduce_sum(tf.square(samples-GT[:,::-1,:]), axis=[1,2])
+    loss = tf.minimum(loss_1, loss_2)
+    loss = tf.reduce_sum(loss) / 2.0
     return loss

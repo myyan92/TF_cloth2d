@@ -61,6 +61,7 @@ def sample_b_spline(knots):
     return samples, weights_t
 
 def sample_equdistance(samples, weights, num_pts):
+    samples = normalize_shape(samples)
     samples = np.array(samples)
     lengths = samples[:,:,1:] - samples[:,:,:-1]
     lengths = np.linalg.norm(lengths, axis=1)

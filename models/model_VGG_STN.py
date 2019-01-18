@@ -65,7 +65,7 @@ class Model_STN(Model):
             self.gt_pred = GT_position
         else:
             self.gt_pred = tf.placeholder(name="gt_pred", dtype=tf.float32, shape=self.pred.shape)
-        self.pred_loss = node_l2loss(self.pred, self.gt_pred, resample_equdistance=True)
+        self.pred_loss = node_l2loss(self.pred, self.gt_pred, resample_equdistance=False)
         centroids_l2 = tf.reduce_mean(tf.reshape(self.pred_2_scaled, [-1,8,8,2]), axis=2)
         self.reg_loss = tf.nn.l2_loss(centroids_l2, "reg_loss")
         self.loss = self.pred_loss + self.reg_loss * 10
