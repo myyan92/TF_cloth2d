@@ -38,7 +38,10 @@ class Model_IM_EM_v2(Model_STNv2):
         sigma = tf.maximum(self.sigma, 0.1)
 
         pix_prob = tf.exp((-tf.square(pix_to_segment_p)-tf.square(pix_to_segment_l))/(2*sigma*sigma))
-        self.reg_loss_e = tf.reduce_sum(pix_prob[:,:,:,1:]*pix_prob[:,:,:,:-1], axis=[0,1,3]) / 20000.0 # to match scale.
+        sum_pix_prob = tf.reduce_sum(pix_prob, axis=3)
+#        self.reg_loss_e = tf.reduce_mean(sum_pix_prob*sum_pix_prob, axis=[0,1]) - \
+#                          tf.reduce_mean(pix_prob*pix_prob, axis=[0,1,3])*tf.cast(tf.shape(pix_prob)[3], tf.float32)
+#        self.reg_loss_e = self.reg_loss_e * 10
         pix_prob = tf.reduce_max(pix_prob, axis=3) # shape should be [224,224,batch]
         pix_prob = tf.transpose(pix_prob, perm=[2,0,1]) # [batch, 224,224]
         pix_prob = tf.clip_by_value(pix_prob, 0, 1)
@@ -92,7 +95,7 @@ class Model_IM_EM_v2(Model_STNv2):
         self.prob_negative=prob_negative
         self.image_loss_e = - tf.reduce_mean(tf.log(pix_prob*prob_positive + (1-pix_prob)*prob_negative), axis=[0,1]) # image loss per instance
         self.image_loss = tf.reduce_mean(self.image_loss_e)
-#        self.reg_loss_e = tf.reduce_mean(dist*dist, axis=1)     # - tf.reduce_mean(tf.reduce_mean(dist,axis=[1])*tf.reduce_mean(dist,axis=[1]), axis=0)*0.95
+        self.reg_loss_e = tf.reduce_mean(dist*dist, axis=1)*4.0     # - tf.reduce_mean(tf.reduce_mean(dist,axis=[1])*tf.reduce_mean(dist,axis=[1]), axis=0)*0.95
         self.reg_loss = tf.reduce_mean(self.reg_loss_e)
         #skip_diff = (self.image_pred[:,2:,:]-self.image_pred[:,:-2,:]) / 2.0
         #skip_dist = tf.norm(skip_diff, axis=2)

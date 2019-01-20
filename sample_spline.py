@@ -68,7 +68,7 @@ def sample_equdistance(samples, weights, num_pts):
     lengths = np.linalg.norm(lengths, axis=0)
     lengths = np.cumsum(lengths)
     lengths = np.insert(lengths, 0, 0)
-    print("total curve length: ", lengths[-1])
+    #print("total curve length: ", lengths[-1])
     segments = np.linspace(0, lengths[-1], num_pts)
     idx = np.searchsorted(lengths, segments)[1:-1]
     alpha = (segments[1:-1]-lengths[idx-1]) / (lengths[idx]-lengths[idx-1])

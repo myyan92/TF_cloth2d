@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from matplotlib.collections import PatchCollection
 import matplotlib.transforms
-from sample_spline import sample_b_spline, sample_equdistance
+from sample_spline_TF import sample_b_spline, sample_equdistance
 from physbam_python.rollout_physbam import rollout_single
 import gin, argparse
 import pdb
@@ -25,11 +25,12 @@ class Visualizer():
         # create TensorFlow Dataset objects
         val_data = tf.data.TFRecordDataset(eval_dataset)
         val_data = val_data.map(data_parser)
-        val_data = val_data.batch(1)
+        val_data = val_data.batch(64)
         # create TensorFlow Iterator object
         iterator = tf.data.Iterator.from_structure(val_data.output_types,
                                                    val_data.output_shapes)
         self.next_image, self.next_position, self.next_knot = iterator.get_next()
+#        self.next_image = tf.image.rot90(self.next_image)
         self.eval_init_op = iterator.make_initializer(val_data)
 
         if pred_target == "node":
@@ -58,22 +59,21 @@ class Visualizer():
                 image, position, pred = self.sess.run(
                     [self.next_image, self.next_position, self.model.pred])
                 if self.pred_target == 'knot':
-                    pred_knots = [pred[0,0,:]]+list(pred[0,:,:]) + [pred[0,-1,:]]
-                    samples,weights = sample_b_spline(pred_knots)
+                    samples,weights = sample_b_spline(pred)
                     samples,weights = sample_equdistance(samples, weights, position.shape[1])
-                    samples = samples.transpose()
+                    samples = samples.transpose((0,2,1))
                 else:
-                    samples = pred[0]
-                loss = np.sum(np.square(samples-position[0,:,:]))
+                    samples = pred
+                    # hack recompute loss after sampling.
+                    samples,_ = sample_equdistance(samples, np.zeros((64,64)), 64)
+                    samples = samples.transpose((0,2,1))
+
+                loss1 = np.sum(np.square(samples-position), axis=(1,2))
+                loss2 = np.sum(np.square(samples-position[:,::-1,:]), axis=(1,2))
+                loss = np.sum(np.minimum(loss1, loss2))
                 total_loss += loss
                 total_count += position.shape[0] * position.shape[1]
                 if "STNv2" in self.model.__class__.__name__:
-                    # hack recompute loss after sampling.
-                    samples,_ = sample_equdistance(samples, np.zeros((64,64)), 64)
-                    samples = samples.transpose()
-                    total_loss -= loss
-                    loss = np.sum(np.square(samples-position[0,:,:]))
-                    total_loss += loss
                     pred = self.sess.run(self.model.pred_layers,
                                          feed_dict={self.model.rgb:image})
                     plt.plot(position[0,:,0], position[0,:,1])
@@ -83,7 +83,8 @@ class Visualizer():
                     plt.plot(pred[3][0,:,0]*6, pred[3][0,:,1]*6)
                     plt.axis("equal")
                     #plt.show()
-                    #plt.savefig('vis_%04d.png'%(total_count//position.shape[1]))
+                    if loss > 100.0:
+                        plt.savefig('vis_%04d.png'%(total_count//position.shape[1]))
                     plt.close()
                     print(loss)
                 elif "STN" in self.model.__class__.__name__:
@@ -92,7 +93,7 @@ class Visualizer():
                     fig, ax = plt.subplots(1)
                     ax.plot(position[0,:,0], position[0,:,1])
                     c = np.tile(np.arange(1,9),8)
-                    ax.scatter(samples[:,0], samples[:,1], c=c)
+                    ax.scatter(samples[0,:,0], samples[0,:,1], c=c)
                     boxes = []
                     for trans in transforms[0]:
                         scale = np.linalg.norm(trans[0:2])
@@ -107,12 +108,13 @@ class Visualizer():
                     plt.axis("equal")
                     #plt.show()
                     plt.close()
-                    print(loss)
+                    #print(loss)
                 else:
                     plt.plot(position[0,:,0], position[0,:,1])
-                    plt.plot(samples[:,0], samples[:,1])
+                    plt.plot(samples[0,:,0], samples[0,:,1])
                     plt.axis("equal")
-                    plt.show()
+                    #plt.show()
+                    plt.close()
                 if self.use_physbam:
                     num_pts = samples.shape[0]
                     nodes, _ = sample_equdistance(samples[:,:], np.zeros((num_pts, num_pts)), num_pts)

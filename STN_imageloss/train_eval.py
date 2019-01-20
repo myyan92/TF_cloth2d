@@ -48,7 +48,7 @@ class Trainner():
         self.train_writer = tf.summary.FileWriter(os.path.join(save_dir, 'tboard'), self.sess.graph)
         self.sess.run(tf.global_variables_initializer())
         self.model.load(self.sess, snapshot)
-        self.loss_threshold=-8.55 # curriculum
+        self.loss_threshold=-4.75  # -8.55 # curriculum
         self.num_train_instance=0 # curriculum
         config_str = gin.operative_config_str()
         with open(os.path.join(save_dir, '0.gin'), 'w') as f:
@@ -88,19 +88,22 @@ class Trainner():
         self.sess.run(self.validation_init_op)
         total_loss = 0
         total_loss_sorted = 0
+        total_image_loss = 0
         total_count = 0
         while True:
             try:
-                gt, pred = self.sess.run([self.next_position, self.model.pred])
+                gt, pred, image_loss = self.sess.run([self.next_position, self.model.pred, self.model.image_loss])
                 loss = np.sum(np.square(gt-pred))
                 total_loss += loss
+                total_image_loss += image_loss*gt.shape[0]*gt.shape[1] # hack to work with count
                 pred_s = [sort_nodes(p) for p in pred]
                 loss_s = np.sum(np.square(gt-np.array(pred_s)))
                 total_loss_sorted += loss_s
                 total_count += gt.shape[0]*gt.shape[1]
             except tf.errors.OutOfRangeError:
                 break
-        print("eval average node L2 loss / sorted L2 loss: %f %f" % (total_loss/total_count, total_loss_sorted/total_count))
+        print("eval average image loss / node L2 loss / sorted L2 loss: %f %f %f" % (
+                total_image_loss/total_count, total_loss/total_count, total_loss_sorted/total_count))
 
     def train(self):
         for i in range(self.num_epoch):
