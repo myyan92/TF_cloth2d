@@ -2,7 +2,7 @@ import tensorflow as tf
 from TF_cloth2d.models.model_VGG_STN_imageloss_EM import Model_IM_EM
 from TF_cloth2d.models.model_VGG_STN_2_imageloss_EM import Model_IM_EM_v2
 from TF_cloth2d.dataset_io import data_parser
-from TF_cloth2d.sort_nodes import sort_nodes
+from TF_cloth2d.sample_spline_TF import sample_equdistance
 import numpy as np
 from PIL import Image
 import argparse, gin, os
@@ -96,7 +96,8 @@ class Trainner():
                 loss = np.sum(np.square(gt-pred))
                 total_loss += loss
                 total_image_loss += image_loss*gt.shape[0]*gt.shape[1] # hack to work with count
-                pred_s = [sort_nodes(p) for p in pred]
+                samples,_ = sample_equdistance(pred, np.zeros((64,64)), 64)
+                pred_s = samples.transpose((0,2,1))
                 loss_s = np.sum(np.square(gt-np.array(pred_s)))
                 total_loss_sorted += loss_s
                 total_count += gt.shape[0]*gt.shape[1]

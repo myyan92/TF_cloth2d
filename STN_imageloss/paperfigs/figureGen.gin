@@ -1,12 +1,4 @@
 SAVE_DIR = './train_real_ours_pretrain_simseq_STNv2_augmented/'
-Trainner.train_dataset = '/scr-ssd/mengyuan/TF_cloth2d/datasets/cloth2d_train_real_ours_rect_2.tfrecords'
-Trainner.eval_dataset = '/scr-ssd/mengyuan/TF_cloth2d/datasets/cloth2d_test_real_ours_rect_2.tfrecords'
-Trainner.snapshot = '/scr-ssd/mengyuan/TF_cloth2d/simseq_data_pred_node_STN_2_large_augmented/model-38'
-Trainner.model = @Model_IM_EM_v2()
-Trainner.num_epoch = 50
-Trainner.batch_size = 48
-Trainner.save_dir = %SAVE_DIR
-
 Model_IM_EM_v2.vgg16_npy_path = '/scr-ssd/mengyuan/TF_cloth2d/models/vgg16_weights.npz'
 Model_IM_EM_v2.fc_sizes = [1024, 1024, 256]
 Model_IM_EM_v2.stop_gradient = False

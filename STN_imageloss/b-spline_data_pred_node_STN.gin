@@ -1,13 +1,13 @@
 SAVE_DIR = './train_simseq_pretrain_bspline_STN/'
-Trainner.train_dataset = '/home/myyan92/TF_cloth2d/datasets/cloth2d_train_sim_seq.tfrecords'
-Trainner.eval_dataset = '/home/myyan92/TF_cloth2d/datasets/cloth2d_test_sim_seq.tfrecords'
-Trainner.snapshot = '/home/myyan92/TF_cloth2d/b-spline_data_pred_node_STN/model-29'
+Trainner.train_dataset = '/scr-ssd/mengyuan/TF_cloth2d/datasets/cloth2d_train_sim_seq.tfrecords'
+Trainner.eval_dataset = '/scr-ssd/mengyuan/TF_cloth2d/datasets/cloth2d_test_sim_seq.tfrecords'
+Trainner.snapshot = '/scr-ssd/mengyuan/TF_cloth2d/b-spline_data_pred_node_STN/model-29'
 Trainner.model = @Model_IM_EM()
 Trainner.num_epoch = 30
 Trainner.batch_size = 48
 Trainner.save_dir = %SAVE_DIR
 
-Model_IM_EM.vgg16_npy_path = '/home/myyan92/TF_cloth2d/models/vgg16_weights.npz'
+Model_IM_EM.vgg16_npy_path = '/scr-ssd/mengyuan/TF_cloth2d/models/vgg16_weights.npz'
 Model_IM_EM.fc_sizes = [1024, 256]
 Model_IM_EM.loss_type = 'l2'
 Model_IM_EM.learning_rate = 0.00001
@@ -16,8 +16,10 @@ Model_IM_EM.train_scale = True
 Model_IM_EM.train_rotation = True
 Model_IM_EM.save_dir = %SAVE_DIR
 
-Visualizer.eval_dataset = '/home/myyan92/TF_cloth2d/datasets/cloth2d_test_sim_seq.tfrecords'
-Visualizer.eval_snapshot = '/home/myyan92/TF_cloth2d/b-spline_data_pred_node_STN/model-29'
+#Visualizer.eval_dataset = '/scr-ssd/mengyuan/TF_cloth2d/datasets/cloth2d_test_sim_seq.tfrecords'
+Visualizer.eval_dataset = '/scr-ssd/mengyuan/TF_cloth2d/datasets/cloth2d_test_real_ours_rect_2.tfrecords'
+#Visualizer.eval_snapshot = '/scr-ssd/mengyuan/TF_cloth2d/b-spline_data_pred_node_STN/model-29'
+Visualizer.eval_snapshot = '/scr-ssd/mengyuan/TF_cloth2d/simseq_data_pred_node_STN_large_augmented/model-33'
 #Visualizer.eval_snapshot = './train_simseq_pretrain_bspline_STN/model-29'
 Visualizer.model = @Model_IM_EM()
 

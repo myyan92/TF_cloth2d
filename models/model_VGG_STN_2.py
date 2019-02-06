@@ -24,6 +24,8 @@ class Model_STNv2(Model):
 
             self.pred_layers = []
             self.raw_pred_layers = []
+            self.raw_pred_transformed = []
+            self.transformations = []
             self.rois = [] # LOWRES
             pred_1 = self.dense(self.last_feature, 'fc%d_trans'%(6+len(self.fc_sizes)), 18, None)
             pred_1 = tf.reshape(pred_1, [-1,9,2])  # x and y in [-1,1]*[-1,1]
@@ -43,6 +45,7 @@ class Model_STNv2(Model):
                                                                          0,-1,0,1,0,0]),
                              bias_initializer=tf.constant_initializer(0.0),
                              trainable=False, name='transforms_%d'%(hierarchy+1))
+                self.transformations.append(transforms)
                 if self.stop_gradient:
                     transforms = tf.stop_gradient(transforms)
                 rois = transformer(pull_feature[hierarchy], transforms, (7,7))
@@ -73,7 +76,7 @@ class Model_STNv2(Model):
 
                 pred_next_transformed = tf.matmul(transform_expand, tf.expand_dims(pred_next, -1))
                 pred_next_transformed = tf.reshape(pred_next_transformed, [-1,num_points,2])
-
+                self.raw_pred_transformed.append(pred_next_transformed)
                 # A hacky way to average endpoints from neighboring boxes.
                 pred_gather_indexes = []
                 pred_gather_indexes.append([0,0])

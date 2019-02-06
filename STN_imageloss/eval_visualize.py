@@ -2,7 +2,6 @@ import tensorflow as tf
 from TF_cloth2d.models.model_VGG_STN_imageloss_EM import Model_IM_EM
 from TF_cloth2d.models.model_VGG_STN_2_imageloss_EM import Model_IM_EM_v2
 from TF_cloth2d.dataset_io import data_parser
-from TF_cloth2d.sort_nodes import sort_nodes
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
@@ -71,10 +70,14 @@ class Visualizer():
                 axes[0].imshow(image[0,:,:,:].astype(np.uint8))
                 pred_im=-pred/6*112+112
                 axes[0].plot(pred_im[0,:,0], pred_im[0,:,1])
+                axes[0].get_xaxis().set_visible(False)
+                axes[0].get_yaxis().set_visible(False)
                 axes[1].imshow(render[0,:,:,:])
-                plt.show()
-                #plt.savefig('eval_%03d.png'%(total_count))
-                #plt.close()
+                axes[1].get_xaxis().set_visible(False)
+                axes[1].get_yaxis().set_visible(False)
+                if total_count % 5 ==0:
+                    plt.savefig('eval_finetune_%03d.png'%(total_count))
+                    plt.close()
                 total_count += 1
                 print(image_loss, reg_loss)
             except tf.errors.OutOfRangeError:

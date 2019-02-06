@@ -18,8 +18,10 @@ Model_STN.train_scale = True
 Model_STN.train_rotation = True
 Model_STN.save_dir = %SAVE_DIR
 
-Visualizer.eval_dataset = './datasets/cloth2d_test.tfrecords'
-Visualizer.eval_snapshot = '/scr1/mengyuan/TF_cloth2d/b-spline_data_pred_node_STN/model-29'
+#Visualizer.eval_dataset = './datasets/cloth2d_test.tfrecords'
+#Visualizer.eval_snapshot = '/scr1/mengyuan/TF_cloth2d/b-spline_data_pred_node_STN/model-29'
+Visualizer.eval_dataset="./datasets/cloth2d_test_sim_seq.tfrecords"
+Visualizer.eval_snapshot = "./simseq_data_pred_node_STN_large_augmented/model-33"
 Visualizer.model = @Model_STN()
 Visualizer.pred_target = 'node'
 Visualizer.use_physbam = False

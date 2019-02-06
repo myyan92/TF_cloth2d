@@ -11,14 +11,16 @@ Trainner.save_dir = %SAVE_DIR
 
 Model.vgg16_npy_path = 'vgg16_weights.npz'
 Model.fc_sizes = [1024, 1024]
-Model.num_points = 128
+Model.num_points = 64
 Model.loss_type = 'l2'
 Model.learning_rate = 0.0005
 Model.momentum = 0.7
 Model.save_dir = %SAVE_DIR
 
-Visualizer.eval_dataset = './datasets/cloth2d_test.tfrecords'
-Visualizer.eval_snapshot = './b-spline_data_pred_node/model-29'
+#Visualizer.eval_dataset = './datasets/cloth2d_test.tfrecords'
+#Visualizer.eval_snapshot = './b-spline_data_pred_node/model-29'
+Visualizer.eval_dataset="./datasets/cloth2d_test_sim_seq.tfrecords"
+Visualizer.eval_snapshot = "./simseq_data_pred_node_large/model-18"
 Visualizer.model = @Model()
 Visualizer.pred_target = 'node'
 Visualizer.use_physbam = False
