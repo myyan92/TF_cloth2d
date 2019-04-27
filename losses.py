@@ -1,5 +1,5 @@
 from sample_spline_TF import sample_b_spline, sample_equdistance
-from physbam_python.rollout_physbam import rollout_single
+from physbam_python.rollout_physbam_2d import rollout_single
 from multiprocessing import Pool
 import numpy as np
 import gin

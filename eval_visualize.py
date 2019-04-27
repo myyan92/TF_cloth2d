@@ -9,7 +9,7 @@ from matplotlib.patches import Rectangle
 from matplotlib.collections import PatchCollection
 import matplotlib.transforms
 from sample_spline_TF import sample_b_spline, sample_equdistance
-from physbam_python.rollout_physbam import rollout_single
+from physbam_python.rollout_physbam_2d import rollout_single
 import gin, argparse
 import pdb
 
@@ -76,13 +76,15 @@ class Visualizer():
                 if "STNv2" in self.model.__class__.__name__:
                     pred = self.sess.run(self.model.pred_layers,
                                          feed_dict={self.model.rgb:image})
-                    plt.plot(position[0,:,0], position[0,:,1])
-                    plt.plot(pred[0][0,:,0]*6, pred[0][0,:,1]*6)
-                    plt.plot(pred[1][0,:,0]*6, pred[1][0,:,1]*6)
-                    plt.plot(pred[2][0,:,0]*6, pred[2][0,:,1]*6)
-                    plt.plot(pred[3][0,:,0]*6, pred[3][0,:,1]*6)
-                    plt.axis("equal")
-                    #plt.show()
+#                    plt.plot(position[0,:,0], position[0,:,1])
+#                    plt.plot(pred[0][0,:,0]*6, pred[0][0,:,1]*6)
+#                    plt.plot(pred[1][0,:,0]*6, pred[1][0,:,1]*6)
+#                    plt.plot(pred[2][0,:,0]*6, pred[2][0,:,1]*6)
+#                    plt.plot(pred[3][0,:,0]*6, pred[3][0,:,1]*6)
+                    plt.imshow(image[0]/255)
+                    plt.plot(112-112*pred[3][0,:,0], 112-112*pred[3][0,:,1])
+#                    plt.axis("equal")
+                    plt.show()
                     if loss > 100.0:
                         plt.savefig('vis_%04d.png'%(total_count//position.shape[1]))
                     plt.close()

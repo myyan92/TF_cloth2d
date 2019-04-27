@@ -20,9 +20,9 @@ def write_record(image_file, position_file, intersect_file, writer):
 
 
 tfrecords_filename = 'cloth2d_%s_xyz_2.tfrecords'
-img_pattern = "/scr-ssd/mengyuan/gen_data/data_intersection_2/%04d.png"
-position_pattern = "/scr-ssd/mengyuan/gen_data/data_intersection_2/%04d.txt"
-intersect_pattern = "/scr-ssd/mengyuan/gen_data/data_intersection_2/%04d_intersect.txt"
+img_pattern = "/scr-ssd/mengyuan/gen_data/data_intersection/%04d.png"
+position_pattern = "/scr-ssd/mengyuan/gen_data/data_intersection/%04d.txt"
+intersect_pattern = "/scr-ssd/mengyuan/gen_data/data_intersection/%04d_intersect.txt"
 
 train_writer = tf.python_io.TFRecordWriter(tfrecords_filename % ('train'))
 for i in range(9000):
