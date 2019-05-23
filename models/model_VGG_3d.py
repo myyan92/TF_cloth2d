@@ -5,7 +5,6 @@ from TF_cloth2d.models.model_VGG import Model, VGG_MEAN
 
 @gin.configurable
 class Model_3d(Model):
-
     def build(self, rgb=None):
         """
         load variable from npy to build the VGG
