@@ -54,6 +54,7 @@ class Visualizer():
         self.sess.run(self.eval_init_op)
         total_loss = 0
         total_count = 0
+        perpoint_losses = []
         while True:
             try:
                 image, position, pred = self.sess.run(
@@ -68,22 +69,23 @@ class Visualizer():
                     samples,_ = sample_equdistance(samples, np.zeros((64,64)), 64)
                     samples = samples.transpose((0,2,1))
 
-                loss1 = np.sum(np.square(samples-position), axis=(1,2))
-                loss2 = np.sum(np.square(samples-position[:,::-1,:]), axis=(1,2))
-                loss = np.sum(np.minimum(loss1, loss2))
-                total_loss += loss
+                loss1 = np.sum(np.square(samples-position), axis=2)
+                loss2 = np.sum(np.square(samples-position[:,::-1,:]), axis=2)
+                loss = np.minimum(loss1, loss2)
+                perpoint_losses.append(loss)
+                total_loss += np.sum(loss)
                 total_count += position.shape[0] * position.shape[1]
                 if "STNv2" in self.model.__class__.__name__:
                     pred = self.sess.run(self.model.pred_layers,
                                          feed_dict={self.model.rgb:image})
-#                    plt.plot(position[0,:,0], position[0,:,1])
-#                    plt.plot(pred[0][0,:,0]*6, pred[0][0,:,1]*6)
-#                    plt.plot(pred[1][0,:,0]*6, pred[1][0,:,1]*6)
-#                    plt.plot(pred[2][0,:,0]*6, pred[2][0,:,1]*6)
-#                    plt.plot(pred[3][0,:,0]*6, pred[3][0,:,1]*6)
+                    plt.plot(position[0,:,0], position[0,:,1])
+                    plt.plot(pred[0][0,:,0]*6, pred[0][0,:,1]*6)
+                    plt.plot(pred[1][0,:,0]*6, pred[1][0,:,1]*6)
+                    plt.plot(pred[2][0,:,0]*6, pred[2][0,:,1]*6)
+                    plt.plot(pred[3][0,:,0]*6, pred[3][0,:,1]*6)
                     plt.imshow(image[0]/255)
                     plt.plot(112-112*pred[3][0,:,0], 112-112*pred[3][0,:,1])
-#                    plt.axis("equal")
+                    plt.axis("equal")
                     plt.show()
                     if loss > 100.0:
                         plt.savefig('vis_%04d.png'%(total_count//position.shape[1]))
@@ -108,14 +110,14 @@ class Visualizer():
                     pc = PatchCollection(boxes, facecolor='none', edgecolor='g')
                     ax.add_collection(pc)
                     plt.axis("equal")
-                    #plt.show()
+                    plt.show()
                     plt.close()
-                    #print(loss)
+                    print(loss)
                 else:
                     plt.plot(position[0,:,0], position[0,:,1])
                     plt.plot(samples[0,:,0], samples[0,:,1])
                     plt.axis("equal")
-                    #plt.show()
+                    plt.show()
                     plt.close()
                 if self.use_physbam:
                     num_pts = samples.shape[0]
@@ -128,13 +130,16 @@ class Visualizer():
                     plt.plot(position_physbam[:,0], position_physbam[:,1])
                     plt.plot(nodes_physbam[:,0], nodes_physbam[:,1]) #, s=1, c="orange")
                     plt.axis("equal")
-                    #plt.show()
+                    plt.show()
                     plt.close()
 
             except tf.errors.OutOfRangeError:
                 break
         print("eval average node L2 loss: %f" % (total_loss/total_count))
-
+        perpoint_losses = np.concatenate(perpoint_losses, axis=0)
+        perpoint_losses = np.sqrt(perpoint_losses)
+        print("node mean Euclidean loss: %f" % (np.mean(perpoint_losses)))
+        print("node Euclidean loss standart deviation: %f" % (np.std(perpoint_losses)))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
