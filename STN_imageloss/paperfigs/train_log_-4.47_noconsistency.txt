@@ -1,0 +1,300 @@
+train batch image / stiffness / centroid loss this epoch: -4.603187 0.022240 0.775439
+trained on 1338 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.450227 4.824687 4.617471
+train batch image / stiffness / centroid loss this epoch: -4.654347 0.027814 0.607552
+trained on 2109 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.499211 5.591208 5.327993
+train batch image / stiffness / centroid loss this epoch: -4.681495 0.029475 0.505578
+trained on 2540 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.529005 5.780485 5.587958
+train batch image / stiffness / centroid loss this epoch: -4.693237 0.029474 0.447275
+trained on 2778 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.553238 5.897309 5.713841
+train batch image / stiffness / centroid loss this epoch: -4.707366 0.029821 0.406241
+trained on 3001 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.575591 5.985358 5.808046
+train batch image / stiffness / centroid loss this epoch: -4.720583 0.030429 0.371792
+trained on 3230 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.605670 6.073422 5.951980
+train batch image / stiffness / centroid loss this epoch: -4.733224 0.030388 0.345176
+trained on 3406 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.620243 6.178751 6.070559
+train batch image / stiffness / centroid loss this epoch: -4.742145 0.030370 0.321012
+trained on 3535 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.633739 6.072452 5.994751
+train batch image / stiffness / centroid loss this epoch: -4.749649 0.029863 0.301607
+trained on 3616 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.644768 5.980121 5.975701
+train batch image / stiffness / centroid loss this epoch: -4.756783 0.029863 0.283471
+trained on 3723 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.657174 6.105465 6.087103
+train batch image / stiffness / centroid loss this epoch: -4.762414 0.029618 0.266443
+trained on 3771 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.664370 6.061760 6.085699
+train batch image / stiffness / centroid loss this epoch: -4.768041 0.029771 0.252630
+trained on 3829 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.674384 6.137757 6.142687
+train batch image / stiffness / centroid loss this epoch: -4.772316 0.029636 0.241650
+trained on 3894 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.678852 6.058419 6.142097
+train batch image / stiffness / centroid loss this epoch: -4.777564 0.029733 0.231173
+trained on 3951 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.690197 6.137457 6.201341
+train batch image / stiffness / centroid loss this epoch: -4.782545 0.029624 0.221820
+trained on 3983 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.692658 6.070586 6.177184
+train batch image / stiffness / centroid loss this epoch: -4.785120 0.029684 0.214346
+trained on 4034 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.703581 6.201744 6.303344
+train batch image / stiffness / centroid loss this epoch: -4.789725 0.029748 0.205979
+trained on 4068 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.708176 6.226825 6.339951
+train batch image / stiffness / centroid loss this epoch: -4.793014 0.029752 0.199163
+trained on 4101 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.714415 6.312503 6.420522
+train batch image / stiffness / centroid loss this epoch: -4.797355 0.029820 0.192661
+trained on 4122 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.720742 6.288279 6.407714
+train batch image / stiffness / centroid loss this epoch: -4.800342 0.029646 0.187200
+trained on 4144 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.725110 6.219413 6.404130
+train batch image / stiffness / centroid loss this epoch: -4.802867 0.029805 0.182838
+trained on 4185 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.729859 6.332124 6.460448
+train batch image / stiffness / centroid loss this epoch: -4.807712 0.029775 0.177234
+trained on 4199 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.732859 6.252543 6.414810
+train batch image / stiffness / centroid loss this epoch: -4.809484 0.029766 0.173046
+trained on 4234 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.738304 6.249343 6.469635
+train batch image / stiffness / centroid loss this epoch: -4.811490 0.029812 0.169410
+trained on 4266 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.741040 6.314367 6.509119
+train batch image / stiffness / centroid loss this epoch: -4.814252 0.029787 0.165366
+trained on 4293 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.746935 6.286049 6.502944
+train batch image / stiffness / centroid loss this epoch: -4.816340 0.029749 0.161809
+trained on 4319 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.757273 6.417775 6.598842
+train batch image / stiffness / centroid loss this epoch: -4.818734 0.029811 0.159340
+trained on 4345 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.755997 6.360429 6.580744
+train batch image / stiffness / centroid loss this epoch: -4.821266 0.029824 0.156010
+trained on 4369 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.761906 6.368682 6.587538
+train batch image / stiffness / centroid loss this epoch: -4.823832 0.029805 0.153146
+trained on 4401 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.763837 6.351872 6.603213
+train batch image / stiffness / centroid loss this epoch: -4.826004 0.029901 0.150894
+trained on 4415 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.769802 6.429320 6.677874
+train batch image / stiffness / centroid loss this epoch: -4.827033 0.029865 0.148619
+trained on 4453 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.770942 6.378225 6.638331
+train batch image / stiffness / centroid loss this epoch: -4.829412 0.029949 0.146341
+trained on 4474 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.778826 6.456312 6.699178
+train batch image / stiffness / centroid loss this epoch: -4.830731 0.029929 0.144347
+trained on 4498 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.778477 6.412484 6.693827
+train batch image / stiffness / centroid loss this epoch: -4.833836 0.029878 0.142632
+trained on 4506 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.786068 6.545903 6.765872
+train batch image / stiffness / centroid loss this epoch: -4.836117 0.030035 0.141122
+trained on 4545 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.787933 6.559680 6.758988
+train batch image / stiffness / centroid loss this epoch: -4.839815 0.030007 0.139392
+trained on 4546 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.790895 6.460531 6.741342
+train batch image / stiffness / centroid loss this epoch: -4.843441 0.030020 0.138034
+trained on 4560 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.795952 6.502806 6.796479
+train batch image / stiffness / centroid loss this epoch: -4.845716 0.030066 0.136088
+trained on 4584 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.802320 6.619563 6.860816
+train batch image / stiffness / centroid loss this epoch: -4.847697 0.030087 0.134601
+trained on 4612 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.804056 6.497084 6.798321
+train batch image / stiffness / centroid loss this epoch: -4.849292 0.030117 0.133594
+trained on 4628 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.809016 6.587599 6.886955
+train batch image / stiffness / centroid loss this epoch: -4.852136 0.030237 0.131797
+trained on 4651 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.813017 6.544692 6.886377
+train batch image / stiffness / centroid loss this epoch: -4.854178 0.030411 0.130372
+trained on 4671 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.815324 6.565804 6.862064
+train batch image / stiffness / centroid loss this epoch: -4.857230 0.030276 0.128723
+trained on 4664 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.818056 6.619562 6.913309
+train batch image / stiffness / centroid loss this epoch: -4.835307 0.029959 0.128395
+trained on 4951 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.822724 6.578071 6.935461
+train batch image / stiffness / centroid loss this epoch: -4.837560 0.030136 0.127344
+trained on 4976 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.823066 6.583672 6.927347
+train batch image / stiffness / centroid loss this epoch: -4.839578 0.030089 0.125866
+trained on 4988 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.826295 6.594829 6.937625
+train batch image / stiffness / centroid loss this epoch: -4.842546 0.030059 0.124783
+trained on 4982 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.832268 6.684857 7.018562
+train batch image / stiffness / centroid loss this epoch: -4.834260 0.030015 0.123815
+trained on 5105 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.836441 6.706998 7.040500
+train batch image / stiffness / centroid loss this epoch: -4.836386 0.030027 0.122807
+trained on 5108 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.840252 6.645076 7.047627
+train batch image / stiffness / centroid loss this epoch: -4.839524 0.030076 0.121285
+trained on 5110 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.840411 6.641395 7.027505
+train batch image / stiffness / centroid loss this epoch: -4.841340 0.030126 0.120028
+trained on 5113 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.843153 6.708326 7.050021
+train batch image / stiffness / centroid loss this epoch: -4.843627 0.030048 0.118874
+trained on 5114 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.844528 6.723648 7.091025
+train batch image / stiffness / centroid loss this epoch: -4.846189 0.030000 0.117943
+trained on 5113 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.848072 6.703915 7.070272
+train batch image / stiffness / centroid loss this epoch: -4.848513 0.030098 0.116804
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.849518 6.682331 7.089657
+train batch image / stiffness / centroid loss this epoch: -4.851397 0.030163 0.116029
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.851767 6.692625 7.074028
+train batch image / stiffness / centroid loss this epoch: -4.854000 0.030245 0.114930
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.855426 6.713848 7.109005
+train batch image / stiffness / centroid loss this epoch: -4.856495 0.030260 0.113475
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.859039 6.694929 7.118600
+train batch image / stiffness / centroid loss this epoch: -4.858056 0.030370 0.112869
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.863118 6.815126 7.199166
+train batch image / stiffness / centroid loss this epoch: -4.862082 0.030465 0.112124
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.862320 6.673586 7.144097
+train batch image / stiffness / centroid loss this epoch: -4.863828 0.030455 0.110903
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.866791 6.781313 7.193016
+train batch image / stiffness / centroid loss this epoch: -4.865979 0.030527 0.109714
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.865634 6.679512 7.157737
+train batch image / stiffness / centroid loss this epoch: -4.868377 0.030591 0.109264
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.870996 6.737799 7.191258
+train batch image / stiffness / centroid loss this epoch: -4.870852 0.030583 0.108334
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.872717 6.742752 7.214594
+train batch image / stiffness / centroid loss this epoch: -4.872910 0.030651 0.107571
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.874540 6.746800 7.227470
+train batch image / stiffness / centroid loss this epoch: -4.875205 0.030783 0.106962
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.877374 6.813423 7.259067
+train batch image / stiffness / centroid loss this epoch: -4.876837 0.030780 0.106319
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.879429 6.812663 7.284944
+train batch image / stiffness / centroid loss this epoch: -4.879267 0.030817 0.105272
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.880965 6.772657 7.259170
+train batch image / stiffness / centroid loss this epoch: -4.881151 0.030808 0.104623
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.883140 6.809871 7.294137
+train batch image / stiffness / centroid loss this epoch: -4.882554 0.030861 0.103952
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.885205 6.822733 7.310665
+train batch image / stiffness / centroid loss this epoch: -4.884986 0.031005 0.102758
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.885176 6.825236 7.329870
+train batch image / stiffness / centroid loss this epoch: -4.885201 0.030816 0.102295
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.889603 6.865591 7.366201
+train batch image / stiffness / centroid loss this epoch: -4.887731 0.030983 0.101225
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.887066 6.828572 7.332063
+train batch image / stiffness / centroid loss this epoch: -4.888947 0.031005 0.100626
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.891804 6.906934 7.390462
+train batch image / stiffness / centroid loss this epoch: -4.890842 0.031052 0.099829
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.890583 6.863784 7.361065
+train batch image / stiffness / centroid loss this epoch: -4.891948 0.030961 0.099101
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.895903 6.874916 7.393916
+train batch image / stiffness / centroid loss this epoch: -4.893486 0.031080 0.098388
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.893266 6.832550 7.368746
+train batch image / stiffness / centroid loss this epoch: -4.894308 0.031037 0.097864
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.893365 6.812840 7.367144
+train batch image / stiffness / centroid loss this epoch: -4.895510 0.031055 0.096902
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.897852 6.890481 7.398464
+train batch image / stiffness / centroid loss this epoch: -4.896710 0.031086 0.096385
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.898977 6.869465 7.387634
+train batch image / stiffness / centroid loss this epoch: -4.898205 0.031104 0.095931
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.897874 6.892531 7.397261
+train batch image / stiffness / centroid loss this epoch: -4.898495 0.031055 0.095580
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.900316 6.828445 7.385287
+train batch image / stiffness / centroid loss this epoch: -4.901179 0.031182 0.094836
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.901129 6.833292 7.415576
+train batch image / stiffness / centroid loss this epoch: -4.901875 0.031153 0.094306
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.900689 6.838662 7.444168
+train batch image / stiffness / centroid loss this epoch: -4.902053 0.031087 0.093806
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.906102 6.951426 7.473830
+train batch image / stiffness / centroid loss this epoch: -4.903890 0.031127 0.093292
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.902297 6.846704 7.414326
+train batch image / stiffness / centroid loss this epoch: -4.904757 0.031167 0.092997
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.907654 6.957547 7.475691
+train batch image / stiffness / centroid loss this epoch: -4.907285 0.031311 0.092222
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.906639 6.852753 7.420338
+train batch image / stiffness / centroid loss this epoch: -4.908168 0.031280 0.091737
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.909410 6.933611 7.476639
+train batch image / stiffness / centroid loss this epoch: -4.909359 0.031281 0.091317
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.911400 6.899999 7.496739
+train batch image / stiffness / centroid loss this epoch: -4.910391 0.031264 0.090998
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.910078 6.908845 7.472570
+train batch image / stiffness / centroid loss this epoch: -4.911209 0.031258 0.090423
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.913227 6.890408 7.486635
+train batch image / stiffness / centroid loss this epoch: -4.913033 0.031321 0.090024
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.915724 6.940914 7.504893
+train batch image / stiffness / centroid loss this epoch: -4.914102 0.031342 0.089584
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.917058 6.953736 7.528473
+train batch image / stiffness / centroid loss this epoch: -4.915472 0.031402 0.089271
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.916027 6.917788 7.498219
+train batch image / stiffness / centroid loss this epoch: -4.916260 0.031362 0.088908
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.917831 6.971841 7.538146
+train batch image / stiffness / centroid loss this epoch: -4.916856 0.031344 0.088254
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.919944 6.983542 7.540037
+train batch image / stiffness / centroid loss this epoch: -4.917946 0.031324 0.087965
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.919829 6.911844 7.518220
+train batch image / stiffness / centroid loss this epoch: -4.919423 0.031421 0.087534
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.918879 6.933410 7.525125
+train batch image / stiffness / centroid loss this epoch: -4.919585 0.031393 0.087224
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.920895 6.951368 7.546941
+train batch image / stiffness / centroid loss this epoch: -4.920639 0.031373 0.086789
+trained on 5118 instances
+eval average image loss / node L2 loss / sorted L2 loss: -4.923282 6.984167 7.564874
