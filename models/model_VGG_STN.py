@@ -1,6 +1,6 @@
 import numpy as np
 import tensorflow as tf
-import gin, gin.tf
+import gin
 from TF_cloth2d.losses_TF import node_l2loss
 from TF_cloth2d.models.spatial_transformer import transformer
 from TF_cloth2d.models.model_VGG import Model, VGG_MEAN

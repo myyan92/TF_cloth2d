@@ -1,5 +1,5 @@
 from TF_cloth2d.models.model_VGG_STN_2 import Model_STNv2, VGG_MEAN
-from TF_cloth2d.losses_TF import sample_equdistance
+from TF_cloth2d.losses_TF import sample_equdistance, node_l2loss
 import tensorflow as tf
 import tensorflow_probability as tfp
 import gin, gin.tf
@@ -129,6 +129,16 @@ class Model_IM_EM_v2(Model_STNv2):
         tf.summary.scalar('reg_loss', self.reg_loss)
         tf.summary.scalar('centroid_loss', self.reg_loss_l2)
         self.merged_summary = tf.summary.merge_all()
+
+        self.pred_target = tf.placeholder(name='consistency_target', dtype=tf.float32, shape=self.pred.shape)
+        self.pred_layers_losses = []
+        for pred in self.pred_layers:
+            loss = node_l2loss(pred*6.0, self.pred_target, resample_equdistance=True)
+            self.pred_layers_losses.append(loss)
+        self.consistency_loss = tf.add_n(self.pred_layers_losses)*0.25 + self.reg_loss_l2*5.0
+        self.consistency_optimizer = tf.train.AdamOptimizer(learning_rate=self.learning_rate*0.1,
+                                                            beta1=self.momentum, epsilon=0.01).minimize(self.consistency_loss)
+
 
     def fit(self, sess, inputs):
         _, summary, image_loss, reg_loss, centroid_loss = sess.run([self.optimizer, self.merged_summary, self.image_loss, self.reg_loss, self.reg_loss_l2],

@@ -1,6 +1,6 @@
 import numpy as np
 import tensorflow as tf
-import gin, gin.tf
+import gin
 import os, pdb
 
 VGG_MEAN = [103.939, 116.779, 123.68]
@@ -83,7 +83,7 @@ class Model:
                 vars = self.get_variables()
                 vars = [v for v in vars if 'moving_mean' in v.name or 'moving_variance' in v.name]
                 saver_var_list = saver_var_list + vars
-            self.saver = tf.train.Saver(var_list=saver_var_list, max_to_keep=50)
+            self.saver = tf.train.Saver(var_list=saver_var_list, max_to_keep=20)
 
     def max_pool(self, bottom, name):
         return tf.nn.max_pool(bottom, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name=name)

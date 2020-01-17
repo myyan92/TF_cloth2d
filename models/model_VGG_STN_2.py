@@ -1,6 +1,6 @@
 import numpy as np
 import tensorflow as tf
-import gin, gin.tf
+import gin
 from TF_cloth2d.losses_TF import node_l2loss
 from TF_cloth2d.models.spatial_transformer import transformer
 from TF_cloth2d.models.model_VGG import Model, VGG_MEAN
@@ -60,7 +60,7 @@ class Model_STNv2(Model):
                 regularizing_loss = tf.reduce_mean((fc_3[:,4:6]-tf.constant([1.0,0.0]))**2)
                 tf.losses.add_loss(regularizing_loss, tf.GraphKeys.REGULARIZATION_LOSSES)
                 regularizing_loss = tf.reduce_mean((fc_3[:,2:4]-tf.constant([0.0,0.0]))**2)
-                tf.losses.add_loss(regularizing_loss*0.1, tf.GraphKeys.REGULARIZATION_LOSSES)
+                tf.losses.add_loss(regularizing_loss, tf.GraphKeys.REGULARIZATION_LOSSES)
 
                 num_points = int(transforms.shape[-2])*3
 
@@ -98,7 +98,7 @@ class Model_STNv2(Model):
                 vars = self.get_variables()
                 vars = [v for v in vars if 'moving_mean' in v.name or 'moving_variance' in v.name]
                 saver_var_list = saver_var_list + vars
-            self.saver = tf.train.Saver(var_list=saver_var_list, max_to_keep=50)
+            self.saver = tf.train.Saver(var_list=saver_var_list, max_to_keep=20)
 
     def setup_optimizer(self, GT_position=None):
         update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
